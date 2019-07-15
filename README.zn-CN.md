@@ -12,6 +12,10 @@ sh git.sh
 # 安装指定版本
 sh git.sh 2.21.0
 
+# PATH 变量生效
+#PATH="$PATH:$SOFT_PATH" => $PATH:/www/soft/bin
+source /etc/bashrc
+
 # 安装目录(default:/www/soft)
 echo $SOFT_DIR
 
