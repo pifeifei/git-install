@@ -102,9 +102,12 @@ cd "${SOFT_DIR}/git-${GIT_VERSION}/"
 #cp -rf share/man/* /usr/local/share/man/
 
 ADDPATH=`cat /etc/bashrc | grep SOFT_PATH`
-[ -z "$ADDPATH" ] && echo "SOFT_PATH=\"${SOFT_DIR}/bin\"">>/etc/bashrc
+[ -z "$ADDPATH" ] && echo "SOFT_PATH=\"${SOFT_DIR}/bin:${SOFT_DIR}/libexec/git-core\"">>/etc/bashrc
 [ -z "$ADDPATH" ] && echo "PATH=\"\$PATH:\$SOFT_PATH\"">>/etc/bashrc
 [ -z "$ADDPATH" ] && source /etc/bashrc
+
+touch ~/.gitconfig
+git config --global init.templatedir "${SOFT_DIR}/git-${GIT_VERSION}/share/git-core/templates"
 
 cd $IN_PWD
 
