@@ -38,8 +38,8 @@ CPUS=`cat /proc/cpuinfo | grep "processor" | wc -l`
 GIT_SOURCES=${GIT_SOURCES:-"https://github.com/git/git.git"}
 
 # software version
-GIT_VERSION=${GIT_VERSION:-"master"}
-# GIT_VERSION=${GIT_VERSION:-"2.22.0"}
+# GIT_VERSION=${GIT_VERSION:-"master"}
+GIT_VERSION=${GIT_VERSION:-"v2.22.0"}
 
 
 
@@ -89,7 +89,7 @@ GIT_VERSION_NOW=`${SOFT_DIR}/git-${GIT_VERSION}/bin/git --version| cut -c13-`
 [ $GIT_VERSION_NOW != $GIT_VERSION ] && mv "${SOFT_DIR}/git-${GIT_VERSION}" "${SOFT_DIR}/git-${GIT_VERSION_NOW}"
 [ $GIT_VERSION_NOW != $GIT_VERSION ] && GIT_VERSION=$GIT_VERSION_NOW
 
-GIT_VERSION_NOW=`/www/soft/git-2.22.GIT/bin/git --version| cut -c13-`
+#GIT_VERSION_NOW=`/www/soft/git-2.22.GIT/bin/git --version| cut -c13-`
 
 ln -sf "${SOFT_DIR}/git-${GIT_VERSION}" "${SOFT_DIR}/git"
 ln -sf "${SOFT_DIR}/git-${GIT_VERSION}/bin/git" "${SOFT_DIR}/bin/git"
@@ -111,12 +111,10 @@ git config --global init.templatedir "${SOFT_DIR}/git-${GIT_VERSION}/share/git-c
 
 cd $IN_PWD
 
-
-#/bin/sh:行1: docbook2x-texi: 未找到命令
-#make[1]: *** [gitman.texi] 错误 127
-
-#/usr/bin/sgml2xml 被 docbook2X-0.8.8-17.el7.x86_64 需要
- #       openjade 被 docbook2X-0.8.8-17.el7.x86_64 需要
- #       perl(XML::SAX::ParserFactory) 被 docbook2X-0.8.8-17.el7.x86_64 需要
- #       texinfo 被 docbook2X-0.8.8-17.el7.x86_64 需要
-
+    echo
+    echo
+    echo
+    echo -e "      \033[31mCongratulations ,git install is complete"
+    echo -e "      source /etc/bashrc"
+    echo -e "      more infomation please visit http://github.com/pifeifei/git-install\033[0m"
+    echo
