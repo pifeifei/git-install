@@ -84,9 +84,9 @@ make -j $CPUS all doc info
 make install install-doc install-html install-info
 [ $? != 0 ] && err_exit "make install err"
 
-GIT_VERSION_NOW=`${SOFT_DIR}/git-${GIT_VERSION}/bin/git --version| cut -c13-`
-[ $GIT_VERSION_NOW != $GIT_VERSION ] && mv "${SOFT_DIR}/git-${GIT_VERSION}" "${SOFT_DIR}/git-${GIT_VERSION_NOW}"
-[ $GIT_VERSION_NOW != $GIT_VERSION ] && GIT_VERSION=$GIT_VERSION_NOW
+# GIT_VERSION_NOW=`${SOFT_DIR}/git-${GIT_VERSION}/bin/git --version| cut -c13-`
+# [ $GIT_VERSION_NOW != $GIT_VERSION ] && mv "${SOFT_DIR}/git-${GIT_VERSION}" "${SOFT_DIR}/git-${GIT_VERSION_NOW}"
+# [ $GIT_VERSION_NOW != $GIT_VERSION ] && GIT_VERSION=$GIT_VERSION_NOW
 
 #GIT_VERSION_NOW=`/www/soft/git-2.22.GIT/bin/git --version| cut -c13-`
 
@@ -98,7 +98,7 @@ ln -sf "${SOFT_DIR}/git-${GIT_VERSION}/bin/git-shell" "${SOFT_DIR}/bin/git-shell
 yum -y remove git
 
 cd "${SOFT_DIR}/git-${GIT_VERSION}/"
-#cp -rf share/man/* /usr/local/share/man/
+/usr/bin/cp -rf share/man/* /usr/local/share/man/  && echo "add git man panges."
 
 ADDPATH=`cat /etc/bashrc | grep SOFT_PATH`
 [ -z "$ADDPATH" ] && echo "SOFT_PATH=\"${SOFT_DIR}/bin:${SOFT_DIR}/libexec/git-core\"">>/etc/bashrc
