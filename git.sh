@@ -26,7 +26,7 @@ CPUS=`cat /proc/cpuinfo | grep "processor" | wc -l`
 [ ! -d "$IN_SRC" ] && mkdir "$IN_SRC"
 [ ! -d "$LOGPATH" ] && mkdir "$LOGPATH"
 [ ! -d "$INF" ] && mkdir "$INF"
-[ ! -d "${SOFT_DIR}/git" ] && mkdir -p "${SOFT_DIR}/git"
+#[ ! -d "${SOFT_DIR}/git" ] && mkdir -p "${SOFT_DIR}/git"
 
 # 初始化安装(SOFT_DIR)目录
 # 目前数据在各自软件文件夹内(如果存在数据文件)
@@ -55,30 +55,29 @@ function err_exit {
     exit
 }
 
+#yum install -y epel-release
+#yum clean all
+#yum makecache
 
 yum install -y gcc gcc-c++ make sudo autoconf openssl-devel cmake \
-            sendmail pam-devel ntpdate
-yum -y install git curl-devel expat-devel gettext-devel \
-    openssl-devel zlib-devel asciidoc xmlto texinfo \
-	openjade perl perl-XML-SAX
-rpm -Uvh http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/d/docbook2X-0.8.8-17.el7.x86_64.rpm
-ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
+            sendmail pam-devel ntpdate \
+            git curl-devel expat-devel gettext-devel \
+            openssl-devel zlib-devel asciidoc xmlto texinfo \
+	        openjade perl perl-XML-SAX docbook2X
+[ ! -f /usr/bin/docbook2x-texi ] && ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2x-texi
+[ ! -f /usr/bin/docbook2texi ] && ln -s /usr/bin/db2x_docbook2texi /usr/bin/docbook2texi
 
-#if [ "$GIT_VERSION" == "master" ]
+
 cd $IN_SRC
 [ ! -d "$IN_SRC/git-${GIT_VERSION}" ] && git clone ${GIT_SOURCES} --branch ${GIT_VERSION} --depth 1 --single-branch git-${GIT_VERSION}
-# err = 1 为什么, 文件夹存在时
+# git clone https://github.com/git/git.git --branch v2.23.0 --depth 1 --single-branch git-v2.23.0
 # [ $? != 0 ] && err_exit "git clone err"
-# [ ! -d "/www/pff/git-install/src/git-v2.21.0" ] && echo 111
-# else
-#	git clone ${GIT_SOURCES} --branch ${GIT_VERSION} --depth 1 --single-branch git-${GIT_VERSION} 
-#fi
 
 cd $IN_SRC/git-${GIT_VERSION}
 
 make configure
 [ $? != 0 ] && err_exit "make configure err"
-./configure --prefix=${SOFT_DIR}/git-${GIT_VERSION}
+./configure --prefix="${SOFT_DIR}/git-${GIT_VERSION}"
 [ $? != 0 ] && err_exit "./configure err"
 make -j $CPUS all doc info
 [ $? != 0 ] && err_exit "make err"
@@ -118,3 +117,4 @@ cd $IN_PWD
     echo -e "      source /etc/bashrc"
     echo -e "      more infomation please visit http://github.com/pifeifei/git-install\033[0m"
     echo
+
